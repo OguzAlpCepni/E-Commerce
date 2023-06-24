@@ -1,5 +1,4 @@
-﻿using Entities.Abstract;
-using Entities.concrete;
+﻿using Core.Entites;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 //Generic constraint
-namespace DataAccess.Abstract
+namespace Core.DataAcces
 {                                                                                       // bu kısımda biz T'Yi düzneliyoruz T referans tip olabilir.Ayrıca T IEntity yada IEntityden implement olan bir şey olabilir .New ile ise newlenebilir olmalı 
     public interface IEntityRepository<T>where T:class,IEntity,new()                       //p=>p.CategoryId==2 gibi filtrelet yazmak için
     {                                                                                   //Linq kullanmak için bu ifadeyi yazıyoruz
