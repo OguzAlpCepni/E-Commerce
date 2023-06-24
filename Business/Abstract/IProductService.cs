@@ -13,6 +13,7 @@ namespace Business.Abstract
         void add(Product product);
         void Delete(Product product);
         void update(Product product);
-        
+        List<Product> GetAllByCategoryId(int id);                   // kategori id sine göre ürünleri getiren fonksiyon 
+        List<Product> GetByUnitPrice(decimal min, decimal max);       // şu ürün aralığında olan ürünleri getir 
     }
 }

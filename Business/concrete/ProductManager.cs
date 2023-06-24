@@ -34,9 +34,15 @@ namespace Business.concrete
              return _productDal.GetAll();
         }
 
-       
+        public List<Product> GetAllByCategoryId(int id)
+        {
+            return _productDal.GetAll(p => p.CategoryId == id);                  // category id benim gönderdiğim kategori id ye eşitse onları filtrele 
+        }
 
-        
+        public List<Product> GetByUnitPrice(decimal min, decimal max)
+        {
+            return _productDal.GetAll(p=>p.UnitPrice>=min && p.UnitPrice<=max); 
+        }
 
         public void update(Product product)
         {

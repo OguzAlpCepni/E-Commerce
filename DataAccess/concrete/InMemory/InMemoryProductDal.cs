@@ -3,11 +3,13 @@ using Entities.concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.concrete.InMemory
 {
+    //I haven't got Db for this project at the moment .I will add DB and EF  
     public class InMemoryProductDal : IProductDal
     {
         List<Product> _products;
@@ -73,9 +75,19 @@ namespace DataAccess.concrete.InMemory
             _products.Remove(ProductToDelete);
         }
 
+        public Product Get(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Product> GetAll()
         {
             return _products;
+        }
+
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Product> GetAllByCategory(int categoryId)

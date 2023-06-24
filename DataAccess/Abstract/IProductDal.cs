@@ -6,14 +6,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Abstract
-{           // interface kendisi public değildir fakat metodları default publictir
-    public interface IProductDal
+{        
+    public interface IProductDal : IEntityRepository<Product>
     {
-        List<Product> GetAll();
-        void Add(Product product);
-        void Update(Product product);
-        void Delete(Product product);
-        List<Product> GetAllByCategory(int categoryId);
-        
+        // interface kendisi public değildir fakat metodları default publictir
+        // senbir IEntityRepositorysin ve calisma tipin Productur
+        // you are a IEntityRepositorysin and your type is a Product
+
+
     }
 }
