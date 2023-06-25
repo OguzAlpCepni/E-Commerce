@@ -2,6 +2,7 @@
 using DataAccess.Abstract;
 using DataAccess.concrete.InMemory;
 using Entities.concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,11 @@ namespace Business.concrete
         public List<Product> GetByUnitPrice(decimal min, decimal max)
         {
             return _productDal.GetAll(p=>p.UnitPrice>=min && p.UnitPrice<=max); 
+        }
+
+        public List<ProductDetailDto> GetProductDetail()
+        {
+           return  _productDal.GetProductDetail();
         }
 
         public void update(Product product)

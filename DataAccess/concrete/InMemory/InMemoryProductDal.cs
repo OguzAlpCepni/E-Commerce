@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,7 +97,10 @@ namespace DataAccess.concrete.InMemory
             return _products.Where(p => p.CategoryId == categoryId).ToList();
         }
 
-        
+        public List<ProductDetailDto> GetProductDetail()
+        {
+            throw new NotImplementedException();
+        }
 
         public void Update(Product product)
         {// gonderdiim urun id sine sahip olan listedeki ürünü  bul 

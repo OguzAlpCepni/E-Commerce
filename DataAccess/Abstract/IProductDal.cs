@@ -1,5 +1,6 @@
 ﻿using Core.DataAcces;
 using Entities.concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace DataAccess.Abstract
         // interface kendisi public değildir fakat metodları default publictir
         // senbir IEntityRepositorysin ve calisma tipin Productur
         // you are a IEntityRepositorysin and your type is a Product
+
+        List<ProductDetailDto> GetProductDetail();
 
 
     }

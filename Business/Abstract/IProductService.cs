@@ -1,4 +1,5 @@
 ﻿using Entities.concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,5 +16,6 @@ namespace Business.Abstract
         void update(Product product);
         List<Product> GetAllByCategoryId(int id);                   // kategori id sine göre ürünleri getiren fonksiyon 
         List<Product> GetByUnitPrice(decimal min, decimal max);       // şu ürün aralığında olan ürünleri getir 
+        List<ProductDetailDto> GetProductDetail();
     }
 }
