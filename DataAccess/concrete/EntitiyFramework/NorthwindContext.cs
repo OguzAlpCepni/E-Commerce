@@ -19,5 +19,6 @@ namespace DataAccess.concrete.EntitiyFramework
         public DbSet<Product> Products { get; set; }                                    //hangi classım hangi tabloya karşılık geliyor 
         public DbSet<Category> Categories { get; set; }                                 //hangi classım hangi tabloya karşılık geliyor 
         public DbSet<Customer> Customers { get; set; }                                  //hangi classım hangi tabloya karşılık geliyor 
+        public DbSet<Order> Orders { get; set; }
     }
 }

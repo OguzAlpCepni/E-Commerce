@@ -4,14 +4,12 @@ using Entities.concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.concrete.EntitiyFramework
 {
-    public class EfCategoryDal : EfEntityRepositoryBase<Category, NorthwindContext>, ICategoryDal
+    internal class EfOrderDal : EfEntityRepositoryBase<Order,NorthwindContext> , IOrderDal
     {
-        
     }
 }
