@@ -1,4 +1,5 @@
 ﻿using Business.Abstract;
+using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.concrete.InMemory;
 using Entities.concrete;
@@ -20,7 +21,7 @@ namespace Business.concrete
             _productDal = productDal;
         }
 
-        public void add(Product product)
+        public IResults add(Product product)
         {
             _productDal.Add(product);
         }
@@ -38,6 +39,11 @@ namespace Business.concrete
         public List<Product> GetAllByCategoryId(int id)
         {
             return _productDal.GetAll(p => p.CategoryId == id);                  // category id benim gönderdiğim kategori id ye eşitse onları filtrele 
+        }
+
+        public Product GetById(int productId)
+        {
+            return _productDal.Get(p=>p.ProductId == productId);
         }
 
         public List<Product> GetByUnitPrice(decimal min, decimal max)
