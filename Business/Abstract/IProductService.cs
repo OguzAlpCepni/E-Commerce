@@ -12,7 +12,7 @@ namespace Business.Abstract
     public interface IProductService
     {
         List<Product> GelAll();
-        IResults add(Product product);
+        IResults Add(Product product);
         void Delete(Product product);
         void update(Product product);
         List<Product> GetAllByCategoryId(int id);                   // kategori id sine göre ürünleri getiren fonksiyon 
