@@ -6,10 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Results
 {
-    // temel voidler icin 
-    public interface IResults
+    internal class ErrorResult
     {
-        bool Success { get; }
-        string Message { get; }
     }
 }

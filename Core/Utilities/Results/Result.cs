@@ -8,9 +8,20 @@ namespace Core.Utilities.Results
 {
     public class Result : IResults
     {
+        
 
-        public bool Succes { get; }
+        public Result(bool success, string message):this(success)// iki parametre gönderen birisi için bu constructoru calistir ama aynı zamanda digerinide çalıştır bu işlemi biz kod tekrarını engellemek için yapıyoruz 
+        {
+            message = Message;
+            
+        }
+        public Result(bool success)
+        {
+            success = Success;
+        }
 
-        public string Message { get; }
+        public bool Success { get; }
+
+        public string Message { get; } // readonlydir get constructorda set edilebilr
     }
 }

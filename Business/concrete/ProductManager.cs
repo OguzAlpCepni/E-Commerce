@@ -24,6 +24,7 @@ namespace Business.concrete
         public IResults add(Product product)
         {
             _productDal.Add(product);
+            return new Result(true);
         }
 
         public void Delete(Product product)
