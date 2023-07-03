@@ -10,11 +10,17 @@ namespace WebAPI.Controllers
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
-    {
+    {   // loosly coupled 
+        // naming conventation 
+        IProductService _productService;
+        public ProductsController(IProductService productService)
+        {
+            _productService = productService; 
+        }
+        [HttpGet]
         public List<Product> get()
         {
-            IProductService prodcutSerivice = new ProductManager(new EfProductDal());
-            var result = prodcutSerivice.GelAll();
+            var result = _productService.GelAll();
             return result.Data;
         }
     }
