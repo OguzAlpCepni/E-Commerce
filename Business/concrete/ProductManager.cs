@@ -52,7 +52,7 @@ namespace Business.concrete
             return new SuccessDataResult<List<Product>>( _productDal.GetAll(p => p.CategoryId == id));                  // category id benim gönderdiğim kategori id ye eşitse onları filtrele 
         }
 
-        public SuccessDataResult<Product> GetById(int productId)
+        public IDataResults<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p=>p.ProductId == productId));
         }
@@ -72,5 +72,7 @@ namespace Business.concrete
             _productDal.Update(product);
            return new SuccessResult(Messages.ProductUpdated) ;
         }
+
+        
     }
 }

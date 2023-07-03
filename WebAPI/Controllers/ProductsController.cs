@@ -1,4 +1,7 @@
-﻿using Entities.concrete;
+﻿using Business.Abstract;
+using Business.concrete;
+using DataAccess.concrete.EntitiyFramework;
+using Entities.concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,11 +13,9 @@ namespace WebAPI.Controllers
     {
         public List<Product> get()
         {
-            return new List<Product>
-            {
-                new Product{ProductId = 1,ProductName="elma"},
-                new Product{ProductId = 2,ProductName="armut"},
-            };
+            IProductService prodcutSerivice = new ProductManager(new EfProductDal());
+            var result = prodcutSerivice.GelAll();
+            return result.Data;
         }
     }
 }
