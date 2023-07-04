@@ -18,10 +18,15 @@ namespace WebAPI.Controllers
             _productService = productService; 
         }
         [HttpGet]
-        public List<Product> get()
-        {
+        public IActionResult get()
+        {   // dependency chain
             var result = _productService.GelAll();
-            return result.Data;
+            if(result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+
         }
     }
 }
