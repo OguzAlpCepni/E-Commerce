@@ -38,13 +38,13 @@ namespace Business.concrete
             return new SuccessResult(Messages.ProductDeleted);
         }
 
-        public IDataResults<List<Product>> GelAll()
+        public IDataResults<List<Product>> GetAll()
         {
-            /*if (DateTime.Now.Hour == 22)
+            if (DateTime.Now.Hour == 4)
             {
                 return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
             }
-            */
+            
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(),Messages.ProductsListed);
         }
 

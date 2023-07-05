@@ -11,7 +11,7 @@ namespace Business.Abstract
 {
     public interface IProductService
     {
-        IDataResults<List<Product>> GelAll();
+        IDataResults<List<Product>> GetAll();
         IResults Add(Product product);
         IResults Delete(Product product);
         IResults update(Product product);
