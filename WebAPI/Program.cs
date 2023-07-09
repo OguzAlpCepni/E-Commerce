@@ -1,7 +1,11 @@
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using Business.Abstract;
 using Business.concrete;
+using Business.DependencyResolvers.Autofac;
 using DataAccess.Abstract;
 using DataAccess.concrete.EntitiyFramework;
+using System.ComponentModel;
 
 namespace WebAPI
 {
@@ -14,10 +18,17 @@ namespace WebAPI
             // Add services to the container.
             //Autofac,Ninject,castleWindsor,Structuremap,LightInject,dryInject -->IOC container
             builder.Services.AddControllers();
-            builder.Services.AddSingleton<IProductService,ProductManager>(); 
-            builder.Services.AddSingleton<IProductDal,EfProductDal>();
+            //builder.Services.AddSingleton<IProductService,ProductManager>(); 
+            //builder.Services.AddSingleton<IProductDal,EfProductDal>();
             // bana arka planda bir referans oluþtur birisi senden IproductsServices isterse ona bir ProductManager oluþtur ve onu ver yani 
             // eger sen bir baðýmlýlýk görürsen ona ikinci referansý ver 
+
+            // IOC alt yapýn var ama autofaci kullan 
+            builder.Host.UseServiceProviderFactory(new AutofacServiceProviderFactory());
+            builder.Host.ConfigureContainer<ContainerBuilder>(builder =>
+            {
+                builder.RegisterModule(new AutofacBusinessModule());
+            });
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -29,6 +40,7 @@ namespace WebAPI
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+                
             }
 
             app.UseHttpsRedirection();
