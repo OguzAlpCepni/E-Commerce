@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
@@ -10,6 +11,7 @@ using Entities.DTOs;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,15 +27,12 @@ namespace Business.concrete
             _productDal = productDal;
         }
 
+        [ValidationAspect(typeof(ProductValidator))]
         public IResults Add(Product product)
         {
-            //fluent validation ile çoklu if yapılarından kurtulmak mümkün
-            ValidationTool.Validate(new ProductValidator(),product);
-            //loglama cacheremove //performance//transaction// Autohorize
-            // bu yapıları teker teker yazmamak için metod üstünde bunları kullanarak [] içerisinde
-            // otomatik olarak bu yapı gidip parametreyi okuyacak productu bulup ilgili validatoru bulup  validation işlemini yapacak 
+                                                                                                                       //fluent validation ile çoklu if yapılarından kurtulmak mümkün                                                                                                          //loglama cacheremove //performance//transaction// Autohorize
             _productDal.Add(product);
-            return new SuccessResult(Messages.ProductAdded);
+            return new SuccessResult(Messages.ProductAdded);                                                           // bu yapıları teker teker yazmamak için metod üstünde bunları kullanarak [] içerisinde                                                                                                            // otomatik olarak bu yapı gidip parametreyi okuyacak productu bulup ilgili validatoru bulup  validation işlemini yapacak 
         }
 
         public IResults Delete(Product product)

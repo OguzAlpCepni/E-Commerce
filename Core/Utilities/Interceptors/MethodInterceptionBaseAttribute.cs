@@ -6,7 +6,7 @@ namespace Core.Utilities.Interceptors
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = true, Inherited = true)]
     public abstract class MethodInterceptionBaseAttribute : Attribute, IInterceptor
     {
-        public int Priority { get; set; }// hangi priort önce çalışsın  
+        public int Priority { get; set; }// hangi priority önce çalışsın  
 
         public virtual void Intercept(IInvocation invocation)
         {
