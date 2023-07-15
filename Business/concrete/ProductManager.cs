@@ -30,9 +30,16 @@ namespace Business.concrete
         [ValidationAspect(typeof(ProductValidator))]
         public IResults Add(Product product)
         {
-                                                                                                                       //fluent validation ile çoklu if yapılarından kurtulmak mümkün                                                                                                          //loglama cacheremove //performance//transaction// Autohorize
-            _productDal.Add(product);
-            return new SuccessResult(Messages.ProductAdded);                                                           // bu yapıları teker teker yazmamak için metod üstünde bunları kullanarak [] içerisinde                                                                                                            // otomatik olarak bu yapı gidip parametreyi okuyacak productu bulup ilgili validatoru bulup  validation işlemini yapacak 
+            if (CheckIfProductCountOfCategoryCorrect(product.CategoryId).Success) {
+                if (ChechIfProductNameExists(product.ProductName).Success)
+                {
+                    _productDal.Add(product);
+                    return new SuccessResult(Messages.ProductAdded);
+                }                                                                                                    //fluent validation ile çoklu if yapılarından kurtulmak mümkün                                                                                                          //loglama cacheremove //performance//transaction// Autohorize
+                                                                                                                     // bu yapıları teker teker yazmamak için metod üstünde bunları kullanarak [] içerisinde                                                                                                            // otomatik olarak bu yapı gidip parametreyi okuyacak productu bulup ilgili validatoru bulup  validation işlemini yapacak 
+
+            }
+            return new ErrorResult();
         }
 
         public IResults Delete(Product product)
@@ -77,6 +84,24 @@ namespace Business.concrete
             return new SuccessResult(Messages.ProductUpdated);
         }
 
+        private IResults CheckIfProductCountOfCategoryCorrect(int categoryId)
+        {
+            var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
+            if (result <= 10)
+            {
+                return new ErrorResult(Messages.ProductCountOfCategoryError);
+            }
+            return new SuccessResult();
+        }
+        private IResults ChechIfProductNameExists(string productName)
+        {
+            var result = _productDal.GetAll(p => p.ProductName == productName).Any();
+            if (result == true)
+            {
+                return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+            return new SuccessResult();
+        }
 
     }
 }

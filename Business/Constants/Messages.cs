@@ -16,6 +16,8 @@ namespace Business.Constants
         public static string ProductUpdated = "product updated";
         public static string ProductDeleted = "product deleted";
         public static string UnitPriceInvalid = "Unit price is invalid";
+        public static string ProductCountOfCategoryError = "Product Count Of Category Error";
+        public static string ProductNameAlreadyExists = "Product name is already exists";
 
     }
 }
