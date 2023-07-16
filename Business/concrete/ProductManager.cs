@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.concrete.InMemory;
@@ -21,25 +22,31 @@ namespace Business.concrete
     public class ProductManager : IProductService
     {
         IProductDal _productDal;
+        ICategoryService _categoryService;
 
-        public ProductManager(IProductDal productDal)
+        public ProductManager(IProductDal productDal,ICategoryService categoryService)
         {
             _productDal = productDal;
+            _categoryService = categoryService;
         }
 
         [ValidationAspect(typeof(ProductValidator))]
         public IResults Add(Product product)
         {
-            if (CheckIfProductCountOfCategoryCorrect(product.CategoryId).Success) {
-                if (ChechIfProductNameExists(product.ProductName).Success)
-                {
-                    _productDal.Add(product);
-                    return new SuccessResult(Messages.ProductAdded);
-                }                                                                                                    //fluent validation ile çoklu if yapılarından kurtulmak mümkün                                                                                                          //loglama cacheremove //performance//transaction// Autohorize
-                                                                                                                     // bu yapıları teker teker yazmamak için metod üstünde bunları kullanarak [] içerisinde                                                                                                            // otomatik olarak bu yapı gidip parametreyi okuyacak productu bulup ilgili validatoru bulup  validation işlemini yapacak 
+            IResults result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId),
+                ChechIfProductNameExists(product.ProductName));
 
+            if(result != null)
+            {
+                return result;
             }
-            return new ErrorResult();
+
+            _productDal.Add(product);
+
+            return new SuccessResult(Messages.ProductAdded);                                                                             //fluent validation ile çoklu if yapılarından kurtulmak mümkün                                                                                                          //loglama cacheremove //performance//transaction// Autohorize
+                                                                                                                                         // bu yapıları teker teker yazmamak için metod üstünde bunları kullanarak [] içerisinde                                                                                                            // otomatik olarak bu yapı gidip parametreyi okuyacak productu bulup ilgili validatoru bulup  validation işlemini yapacak 
+
+
         }
 
         public IResults Delete(Product product)
@@ -99,6 +106,15 @@ namespace Business.concrete
             if (result == true)
             {
                 return new ErrorResult(Messages.ProductNameAlreadyExists);
+            }
+            return new SuccessResult();
+        }
+        private IResults CheckIfCategoryLimitExceded()
+        {
+            var result = _categoryService.GetAll();
+            if (result.Data.Count > 15)
+            {
+                return new ErrorResult(Messages.CategoryLimitExceded);
             }
             return new SuccessResult();
         }
