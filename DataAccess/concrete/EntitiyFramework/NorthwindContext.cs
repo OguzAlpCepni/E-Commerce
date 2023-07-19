@@ -1,4 +1,5 @@
-﻿using Entities.concrete;
+﻿using Core.Entites.Concrete;
+using Entities.concrete;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -20,5 +21,8 @@ namespace DataAccess.concrete.EntitiyFramework
         public DbSet<Category> Categories { get; set; }                                 //hangi classım hangi tabloya karşılık geliyor 
         public DbSet<Customer> Customers { get; set; }                                  //hangi classım hangi tabloya karşılık geliyor 
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OperationClaim> OperationClaims { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserOperationClaim> UserOperationClaims { get; set; }
     }
 }

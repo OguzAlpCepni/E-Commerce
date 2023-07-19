@@ -9,7 +9,7 @@ namespace Core.Utilities.Security.Encryption
 {
     public class SigningCredentialsHelper
     {
-        public static SigningCredentials CigningCredentials(SecurityKey securityKey)  // JWT larının oluşturulması için credential (anahtar)
+        public static SigningCredentials CreateSigningCredentials(SecurityKey securityKey)  // JWT larının oluşturulması için credential (anahtar)
         {
             return new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha512Signature);
         }
