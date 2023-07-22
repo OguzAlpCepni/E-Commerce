@@ -11,7 +11,7 @@ namespace Core.Utilities.Security.Encryption
     {
         public static SigningCredentials CreateSigningCredentials(SecurityKey securityKey)  // JWT larının oluşturulması için credential (anahtar)
         {
-            return new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha512Signature);
+            return new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256Signature);
         }
     }
 }
