@@ -5,8 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.CrossCuttingConcerns.Caching
-{
-    internal interface ICacheManager
+{   // butun alternatiflerin interfacesi veri-elasticSearch 
+    public interface ICacheManager
     {
+        T Get<T>(string key);
+        object Get(string key);
+        void add(string key, object value,int duration);
+        bool IsAdd(string key); // cachede var mı
+        void remove(string key);// cachedeh silme 
+        void RemoveByPattern(string pattern);
     }
 }

@@ -3,6 +3,9 @@ using Business.BusinessAspects.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
+using Core.Aspects.caching;
+using Core.Aspects.Performance;
+using Core.Aspects.Transaction;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -33,6 +36,7 @@ namespace Business.concrete
         //claim
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResults Add(Product product)
         {
             IResults result = BusinessRules.Run(CheckIfProductCountOfCategoryCorrect(product.CategoryId),
@@ -57,6 +61,7 @@ namespace Business.concrete
             return new SuccessResult(Messages.ProductDeleted);
         }
 
+        [CacheAspect] //herhangi bir kullanici bu kodu calistirdiysa ve o data degismediyse bir daha bir daha db ye gitmesine gerek yok bir daha cagirildiginide cacheden getirilmesini saglar . cachelenmek istedigimiz datayı key,value ile tutuyoruz 
         public IDataResults<List<Product>> GetAll()
         {
             if (DateTime.Now.Hour == 4)
@@ -71,7 +76,8 @@ namespace Business.concrete
         {
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));                  // category id benim gönderdiğim kategori id ye eşitse onları filtrele 
         }
-
+        [CacheAspect]
+        [PerformanceAspect(5)]
         public IDataResults<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId));
@@ -86,7 +92,7 @@ namespace Business.concrete
         {
             return new SuccessDataResult<List<ProductDetailDto>>(_productDal.GetProductDetail());
         }
-
+        [CacheRemoveAspect("IProductService.Get")]
         public IResults update(Product product)
         {
             _productDal.Update(product);
@@ -120,6 +126,16 @@ namespace Business.concrete
             }
             return new SuccessResult();
         }
-
+        [TransactionScopeAspect]
+        public IResults AddTransactionTest(Product product)
+        {
+            Add(product);
+            if (product.UnitPrice < 10)
+            {
+                throw new Exception("");
+            }
+            Add(product);
+            return null;
+        }
     }
 }

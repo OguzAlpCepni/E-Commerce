@@ -19,5 +19,6 @@ namespace Business.Abstract
         IDataResults<List<Product>> GetByUnitPrice(decimal min, decimal max);       // şu ürün aralığında olan ürünleri getir 
         IDataResults<List<ProductDetailDto>> GetProductDetail();
         IDataResults<Product> GetById(int productId);
+        IResults AddTransactionTest(Product product);
     }
 }
